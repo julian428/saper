@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "config.h"
+#include "board.h"
 
 void chooseDifficulty()
 {
@@ -18,16 +19,19 @@ void chooseDifficulty()
         ROWS = EASY_ROWS;
         COLS = EASY_COLS;
         MINES = EASY_MINES;
+        difficulty = 1;
         break;
     case 2:
         ROWS = MEDIUM_ROWS;
         COLS = MEDIUM_COLS;
         MINES = MEDIUM_MINES;
+        difficulty = 2;
         break;
     case 3:
         ROWS = HARD_ROWS;
         COLS = HARD_COLS;
         MINES = HARD_MINES;
+        difficulty = 3;
         break;
     case 4:
         printf("Podaj liczbę wierszy: ");
@@ -42,6 +46,11 @@ void chooseDifficulty()
             ROWS = EASY_ROWS;
             COLS = EASY_COLS;
             MINES = EASY_MINES;
+            difficulty = 1;
+        }
+        else
+        {
+            difficulty = 0; // Własny poziom trudności
         }
         break;
     default:
@@ -49,5 +58,6 @@ void chooseDifficulty()
         ROWS = EASY_ROWS;
         COLS = EASY_COLS;
         MINES = EASY_MINES;
+        difficulty = 1;
     }
 }

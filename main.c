@@ -46,6 +46,11 @@ int main()
         }
     }
 
+    // Obliczanie wyniku gracza
+    int multiplier = difficulty; // 1 dla łatwego, 2 dla średniego, 3 dla trudnego, 0 dla własnego
+    int score = revealedFields * multiplier;
+    printf("\nTwój wynik: %d (odsłonięte pola: %d * mnożnik: %d)\n", score, revealedFields, multiplier);
+
     freeBoard();
     return 0;
 }

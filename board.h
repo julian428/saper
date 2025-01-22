@@ -4,6 +4,8 @@
 extern char **board;
 extern char **display;
 extern int ROWS, COLS, MINES;
+extern int difficulty;     // Poziom trudności: 1 - Łatwy, 2 - Średni, 3 - Trudny, 0 - Własny
+extern int revealedFields; // Licznik odsłoniętych pól
 
 void initializeBoard();
 void freeBoard();
