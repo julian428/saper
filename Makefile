@@ -16,4 +16,4 @@ config.o: config.c config.h
 	$(CC) $(CFLAGS) -c config.c
 
 clean:
-	rm saper
+	rm saper *.o

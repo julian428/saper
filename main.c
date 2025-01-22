@@ -14,13 +14,13 @@ int main()
     {
         printBoard(display);
         char action;
-        int row, col;
-        printf("Podaj akcję (o - odkryj, f - flaga) oraz wiersz i kolumnę (np. o 0 1): ");
-        scanf(" %c %d %d", &action, &row, &col);
+        int x, y;
+        printf("Podaj akcję (r - odkryj, f - flaga) oraz kolumnę (x) i wiersz (y) (np. r 1 0): ");
+        scanf(" %c %d %d", &action, &x, &y);
 
-        if (action == 'o')
+        if (action == 'r')
         {
-            int result = reveal(row, col);
+            int result = reveal(y, x); // Zmieniamy kolejność argumentów (y, x)
 
             if (result == -1)
             {
@@ -38,11 +38,11 @@ int main()
         }
         else if (action == 'f')
         {
-            placeFlag(row, col);
+            placeFlag(y, x); // Zmieniamy kolejność argumentów (y, x)
         }
         else
         {
-            printf("Nieprawidłowa akcja. Użyj 'o' lub 'f'.\n");
+            printf("Nieprawidłowa akcja. Użyj 'r' lub 'f'.\n");
         }
     }
 
