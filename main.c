@@ -1,8 +1,10 @@
-#include "saper.h"
 #include <stdio.h>
+#include "board.h"
+#include "config.h"
 
 int main()
 {
+    chooseDifficulty();
     initializeBoard();
     placeMines();
 
@@ -44,5 +46,6 @@ int main()
         }
     }
 
+    freeBoard();
     return 0;
 }

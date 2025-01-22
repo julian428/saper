@@ -1,22 +1,38 @@
-#include "saper.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "board.h"
 
-// Tablice globalne
-char board[ROWS][COLS];
-char display[ROWS][COLS];
+char **board;
+char **display;
+int ROWS, COLS, MINES;
 
 void initializeBoard()
 {
+    board = malloc(ROWS * sizeof(char *));
+    display = malloc(ROWS * sizeof(char *));
+
     for (int i = 0; i < ROWS; i++)
     {
+        board[i] = malloc(COLS * sizeof(char));
+        display[i] = malloc(COLS * sizeof(char));
         for (int j = 0; j < COLS; j++)
         {
             board[i][j] = '0';
             display[i][j] = '*';
         }
     }
+}
+
+void freeBoard()
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        free(board[i]);
+        free(display[i]);
+    }
+    free(board);
+    free(display);
 }
 
 void placeMines()
@@ -34,7 +50,6 @@ void placeMines()
             board[row][col] = 'M';
             placedMines++;
 
-            // Update numbers around the mine
             for (int i = -1; i <= 1; i++)
             {
                 for (int j = -1; j <= 1; j++)
@@ -52,7 +67,7 @@ void placeMines()
     }
 }
 
-void printBoard(char b[ROWS][COLS])
+void printBoard(char **b)
 {
     printf("  ");
     for (int j = 0; j < COLS; j++)
