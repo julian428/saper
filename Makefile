@@ -14,3 +14,6 @@ board.o: board.c board.h
 
 config.o: config.c config.h
 	$(CC) $(CFLAGS) -c config.c
+
+clean:
+	rm saper
