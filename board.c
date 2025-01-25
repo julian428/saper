@@ -101,7 +101,7 @@ int reveal(int row, int col)
         return -1; // Trafiono minę
     }
 
-    revealedFields++; // Zwiększ licznik odsłoniętych pól
+    revealedFields++;
 
     if (board[row][col] == '0')
     {

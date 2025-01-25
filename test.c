@@ -64,7 +64,6 @@ void test_moves_from_file()
     fprintf(file, "r 0 0\nr 1 1\nf 2 2\n");
     fclose(file);
 
-    // Dodaj inicjalizację zmiennych globalnych
     ROWS = 9;
     COLS = 9;
     MINES = 10;
@@ -82,8 +81,8 @@ void test_moves_from_file()
         printf("FAILED: Błąd ruchów z pliku.\n");
     }
 
-    freeBoard();      // Sprzątanie pamięci
-    remove(testFile); // Usunięcie pliku testowego
+    freeBoard();
+    remove(testFile);
 }
 
 int main()

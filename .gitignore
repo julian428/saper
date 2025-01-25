@@ -1,4 +1,5 @@
 saper
+test
 *.o
 *.txt
 .vscode

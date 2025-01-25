@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include "board.h"
 #include "config.h"
 
@@ -8,23 +10,37 @@ int revealedFields;
 
 int main(int argc, char *argv[])
 {
-    if (argc == 3 && strcmp(argv[1], "-f") == 0)
+    int opt;
+    while ((opt = getopt(argc, argv, "f:")) != -1)
     {
-        // Tryb wczytywania ruchów z pliku
-        chooseDifficulty();
-        initializeBoard();
-        placeMines();
+        if (opt == 'f')
+        {
+            chooseDifficulty();
+            initializeBoard();
+            placeMines();
 
-        const char *filename = argv[2];
-        return processMovesFromFile(filename);
+            const char *filename = argv[2];
+            return processMovesFromFile(filename);
+        }
     }
+
+    // if (argc == 3 && strcmp(argv[1], "-f") == 0)
+    // {
+    //     // Tryb wczytywania ruchów z pliku
+    //     chooseDifficulty();
+    //     initializeBoard();
+    //     placeMines();
+
+    //     const char *filename = argv[2];
+    //     return processMovesFromFile(filename);
+    // }
 
     // Tryb standardowy
     chooseDifficulty();
     initializeBoard();
     placeMines();
 
-    printf("Witamy w grze Saper!\n");
+    printf("Witam w grze Saper!\n");
 
     while (1)
     {
@@ -32,11 +48,14 @@ int main(int argc, char *argv[])
         char action;
         int x, y;
         printf("Podaj akcję (r - odkryj, f - flaga) oraz kolumnę (x) i wiersz (y) (np. r 1 0): ");
-        scanf(" %c %d %d", &action, &x, &y);
+        if (scanf(" %c %d %d", &action, &x, &y) != 3)
+        {
+            printf("format ruchu to r/f x y");
+        }
 
         if (action == 'r')
         {
-            int result = reveal(y, x); // Zmieniamy kolejność argumentów (y, x)
+            int result = reveal(y, x);
 
             if (result == -1)
             {
@@ -54,7 +73,7 @@ int main(int argc, char *argv[])
         }
         else if (action == 'f')
         {
-            placeFlag(y, x); // Zmieniamy kolejność argumentów (y, x)
+            placeFlag(y, x);
         }
         else
         {
@@ -62,16 +81,14 @@ int main(int argc, char *argv[])
         }
     }
 
-    // Wyświetl wynik i zapisz do pliku
     int score = revealedFields * difficulty;
     printf("\nTwój wynik: %d (odsłonięte pola: %d * mnożnik: %d)\n", score, revealedFields, difficulty);
 
     char playerName[50];
     printf("Podaj swoje imię: ");
-    scanf("%s", playerName);
-    saveScore(playerName, score);
+    if (scanf("%s", playerName) == 1)
+        saveScore(playerName, score);
 
-    // Wyświetl top 5 wyników
     showTopScores();
 
     freeBoard();

@@ -2,7 +2,6 @@
 #include "config.h"
 #include "board.h"
 
-// Funkcja do zapisywania wyniku
 void saveScore(const char *name, int score)
 {
     FILE *file = fopen("scores.txt", "a");
@@ -15,7 +14,6 @@ void saveScore(const char *name, int score)
     fclose(file);
 }
 
-// Funkcja do wyświetlania top 5 wyników
 void showTopScores()
 {
     FILE *file = fopen("scores.txt", "r");
