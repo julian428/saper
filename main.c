@@ -1,12 +1,25 @@
 #include <stdio.h>
+#include <string.h>
 #include "board.h"
 #include "config.h"
 
 int difficulty;
 int revealedFields;
 
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc == 3 && strcmp(argv[1], "-f") == 0)
+    {
+        // Tryb wczytywania ruchów z pliku
+        chooseDifficulty();
+        initializeBoard();
+        placeMines();
+
+        const char *filename = argv[2];
+        return processMovesFromFile(filename);
+    }
+
+    // Tryb standardowy
     chooseDifficulty();
     initializeBoard();
     placeMines();

@@ -15,6 +15,7 @@
 
 extern int ROWS, COLS, MINES;
 
+int processMovesFromFile(const char *filename);
 void saveScore(const char *name, int score);
 void showTopScores();
 void chooseDifficulty();

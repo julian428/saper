@@ -122,3 +122,63 @@ void chooseDifficulty()
         difficulty = 1;
     }
 }
+
+int processMovesFromFile(const char *filename)
+{
+    FILE *file = fopen(filename, "r");
+    if (file == NULL)
+    {
+        printf("Nie można otworzyć pliku: %s\n", filename);
+        return -1;
+    }
+
+    int correctSteps = 0;
+    char action;
+    int x, y;
+
+    while (fscanf(file, " %c %d %d", &action, &x, &y) == 3)
+    {
+        if (action == 'r')
+        {
+            int result = reveal(y, x);
+            if (result == -1)
+            {
+                printf("\nGra zakończyła się porażką.\n");
+                fclose(file);
+                printf("Poprawne kroki: %d\n", correctSteps);
+                printf("Liczba punktów: %d\n", revealedFields * difficulty);
+                printf("Zakończenie: 0\n");
+                return 0; // Przegrana
+            }
+            else
+            {
+                correctSteps++;
+            }
+
+            if (checkWin())
+            {
+                printf("\nGra zakończyła się sukcesem!\n");
+                fclose(file);
+                printf("Poprawne kroki: %d\n", correctSteps);
+                printf("Liczba punktów: %d\n", revealedFields * difficulty);
+                printf("Zakończenie: 1\n");
+                return 1; // Wygrana
+            }
+        }
+        else if (action == 'f')
+        {
+            placeFlag(y, x);
+        }
+        else
+        {
+            printf("Nieprawidłowy ruch w pliku: %c %d %d\n", action, x, y);
+        }
+    }
+
+    fclose(file);
+    printf("\nGra nie została zakończona.\n");
+    printf("Poprawne kroki: %d\n", correctSteps);
+    printf("Liczba punktów: %d\n", revealedFields * difficulty);
+    printf("Zakończenie: 0\n");
+    return 0; // Gra nie została zakończona
+}
