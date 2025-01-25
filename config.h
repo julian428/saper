@@ -15,6 +15,8 @@
 
 extern int ROWS, COLS, MINES;
 
+void saveScore(const char *name, int score);
+void showTopScores();
 void chooseDifficulty();
 
 #endif

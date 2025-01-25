@@ -2,6 +2,9 @@
 #include "board.h"
 #include "config.h"
 
+int difficulty;
+int revealedFields;
+
 int main()
 {
     chooseDifficulty();
@@ -46,10 +49,17 @@ int main()
         }
     }
 
-    // Obliczanie wyniku gracza
-    int multiplier = difficulty; // 1 dla łatwego, 2 dla średniego, 3 dla trudnego, 0 dla własnego
-    int score = revealedFields * multiplier;
-    printf("\nTwój wynik: %d (odsłonięte pola: %d * mnożnik: %d)\n", score, revealedFields, multiplier);
+    // Wyświetl wynik i zapisz do pliku
+    int score = revealedFields * difficulty;
+    printf("\nTwój wynik: %d (odsłonięte pola: %d * mnożnik: %d)\n", score, revealedFields, difficulty);
+
+    char playerName[50];
+    printf("Podaj swoje imię: ");
+    scanf("%s", playerName);
+    saveScore(playerName, score);
+
+    // Wyświetl top 5 wyników
+    showTopScores();
 
     freeBoard();
     return 0;

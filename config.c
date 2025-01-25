@@ -2,6 +2,67 @@
 #include "config.h"
 #include "board.h"
 
+// Funkcja do zapisywania wyniku
+void saveScore(const char *name, int score)
+{
+    FILE *file = fopen("scores.txt", "a");
+    if (file == NULL)
+    {
+        printf("Nie można otworzyć pliku wyników.\n");
+        return;
+    }
+    fprintf(file, "%s %d\n", name, score);
+    fclose(file);
+}
+
+// Funkcja do wyświetlania top 5 wyników
+void showTopScores()
+{
+    FILE *file = fopen("scores.txt", "r");
+    if (file == NULL)
+    {
+        printf("Brak zapisanych wyników.\n");
+        return;
+    }
+
+    typedef struct
+    {
+        char name[50];
+        int score;
+    } Player;
+
+    Player players[100];
+    int count = 0;
+
+    // Wczytaj wyniki z pliku
+    while (fscanf(file, "%s %d", players[count].name, &players[count].score) == 2)
+    {
+        count++;
+    }
+    fclose(file);
+
+    // Posortuj wyniki malejąco
+    for (int i = 0; i < count - 1; i++)
+    {
+        for (int j = i + 1; j < count; j++)
+        {
+            if (players[i].score < players[j].score)
+            {
+                Player temp = players[i];
+                players[i] = players[j];
+                players[j] = temp;
+            }
+        }
+    }
+
+    // Wyświetl top 5
+    printf("\n--- TOP 5 NAJLEPSZYCH WYNIKÓW ---\n");
+    for (int i = 0; i < count && i < 5; i++)
+    {
+        printf("%d. %s - %d\n", i + 1, players[i].name, players[i].score);
+    }
+}
+
 void chooseDifficulty()
 {
     int choice;
