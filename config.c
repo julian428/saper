@@ -32,14 +32,14 @@ void showTopScores()
     Player players[100];
     int count = 0;
 
-    // Wczytaj wyniki z pliku
+    // Wczytuje wyniki z pliku
     while (fscanf(file, "%s %d", players[count].name, &players[count].score) == 2)
     {
         count++;
     }
     fclose(file);
 
-    // Posortuj wyniki malejąco
+    // sortuje wyniki malejąco
     for (int i = 0; i < count - 1; i++)
     {
         for (int j = i + 1; j < count; j++)
@@ -53,7 +53,7 @@ void showTopScores()
         }
     }
 
-    // Wyświetl top 5
+    // Wyświetla top 5
     printf("\n--- TOP 5 NAJLEPSZYCH WYNIKÓW ---\n");
     for (int i = 0; i < count && i < 5; i++)
     {

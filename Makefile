@@ -16,7 +16,7 @@ config.o: config.c config.h
 	$(CC) $(CFLAGS) -c config.c
 
 clean:
-	rm saper *.o scores.txt
+	rm saper test *.o *.txt
 
 test: all
 	$(CC) -o test test.c config.c board.c -I. $(CFLAGS)

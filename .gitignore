@@ -3,3 +3,4 @@ test
 *.o
 *.txt
 .vscode
+.txt
