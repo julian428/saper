@@ -141,15 +141,21 @@ void placeFlag(int row, int col)
 
 int checkWin()
 {
+    if (!display || !board)
+    {
+        printf("Błąd: Plansza nie została zainicjalizowana.\n");
+        return -1; // Kod błędu
+    }
+
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
         {
             if (display[i][j] == '*' && board[i][j] != 'M')
             {
-                return 0;
+                return 0; // Gra jeszcze się nie skończyła
             }
         }
     }
-    return 1;
+    return 1; // Wszystkie pola odkryte
 }

@@ -72,7 +72,10 @@ void chooseDifficulty()
     printf("3. Trudny (16x30, 99 min)\n");
     printf("4. Własna plansza\n");
     printf("Twój wybór: ");
-    scanf("%d", &choice);
+    if (scanf("%d", &choice) == 0)
+    {
+        choice = 1;
+    }
 
     switch (choice)
     {
@@ -96,11 +99,20 @@ void chooseDifficulty()
         break;
     case 4:
         printf("Podaj liczbę wierszy: ");
-        scanf("%d", &ROWS);
+        if (scanf("%d", &ROWS) == 0)
+        {
+            choice = 1;
+        }
         printf("Podaj liczbę kolumn: ");
-        scanf("%d", &COLS);
+        if (scanf("%d", &COLS) == 0)
+        {
+            choice = 1;
+        }
         printf("Podaj liczbę min: ");
-        scanf("%d", &MINES);
+        if (scanf("%d", &MINES) == 0)
+        {
+            choice = 1;
+        }
         if (MINES >= ROWS * COLS)
         {
             printf("Za dużo min na planszy! Ustawienie domyślne (łatwy).\n");

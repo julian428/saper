@@ -1,3 +1,4 @@
 saper
 *.o
-scores.txt
+*.txt
+.vscode
