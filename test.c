@@ -9,7 +9,7 @@ int revealedFields;
 
 void test_easy_game()
 {
-    printf("=== Test: Gra ===\n");
+    printf(YELLOW "=== Test: Gra ===\n" RESET);
     ROWS = 9;
     COLS = 9;
     MINES = 10;
@@ -20,11 +20,11 @@ void test_easy_game()
     reveal(0, 0);
     if (revealedFields > initialRevealed)
     {
-        printf("PASSED: polecenie r zadziałało poprawnie.\n");
+        printf(GREEN "PASSED: polecenie r zadziałało poprawnie.\n" RESET);
     }
     else
     {
-        printf("FAILED: polecenie r nie odsłoniło żadnej komórki.\n");
+        printf(RED "FAILED: polecenie r nie odsłoniło żadnej komórki.\n" RESET);
     }
 
     freeBoard();
@@ -32,7 +32,7 @@ void test_easy_game()
 
 void test_custom_game()
 {
-    printf("=== Test: Gra własna ===\n");
+    printf(CYAN "\n=== Test: Gra własna ===\n" RESET);
     ROWS = 5;
     COLS = 5;
     MINES = 3;
@@ -41,11 +41,11 @@ void test_custom_game()
 
     if (MINES > 0 && board != NULL)
     {
-        printf("PASSED: Gra własna zainicjalizowana poprawnie.\n");
+        printf(GREEN "PASSED: Gra własna zainicjalizowana poprawnie.\n" RESET);
     }
     else
     {
-        printf("FAILED: Nie udało się zainicjalizować gry własnej.\n");
+        printf(RED "FAILED: Nie udało się zainicjalizować gry własnej.\n" RESET);
     }
 
     freeBoard();
@@ -53,12 +53,12 @@ void test_custom_game()
 
 void test_moves_from_file()
 {
-    printf("=== Test: Ruchy z pliku ===\n");
+    printf(MAGENTA "\n=== Test: Ruchy z pliku ===\n" RESET);
     const char *testFile = "test_moves.txt";
     FILE *file = fopen(testFile, "w");
     if (!file)
     {
-        printf("FAILED: Nie udało się stworzyć pliku.\n");
+        printf(RED "FAILED: Nie udało się stworzyć pliku.\n" RESET);
         return;
     }
     fprintf(file, "r 0 0\nr 1 1\nf 2 2\n");
@@ -74,11 +74,11 @@ void test_moves_from_file()
     int result = processMovesFromFile(testFile);
     if (result >= 0)
     {
-        printf("PASSED: Ruchy z pliku zostały przeprowadzone poprawnie.\n");
+        printf(GREEN "PASSED: Ruchy z pliku zostały przeprowadzone poprawnie.\n" RESET);
     }
     else
     {
-        printf("FAILED: Błąd ruchów z pliku.\n");
+        printf(RED "FAILED: Błąd ruchów z pliku.\n" RESET);
     }
 
     freeBoard();
