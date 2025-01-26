@@ -74,10 +74,13 @@ int main(int argc, char *argv[])
     int score = revealedFields * difficulty;
     printf("\nTwój wynik: %d (odsłonięte pola: %d * mnożnik: %d)\n", score, revealedFields, difficulty);
 
-    char playerName[50];
-    printf("Podaj swoje imię: ");
-    if (scanf("%s", playerName) == 1)
-        saveScore(playerName, score);
+    if (difficulty != 0)
+    {
+        char playerName[50];
+        printf("Podaj swoje imię: ");
+        if (scanf("%s", playerName) == 1)
+            saveScore(playerName, score);
+    }
 
     showTopScores();
 

@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
 #include "board.h"
 
 // Kolory ANSI
@@ -14,8 +16,8 @@
 #define YELLOW "\033[1;33m"
 #define WHITE "\033[1;37m"
 
-#define CONSOLE_WIDTH 80
-#define CONSOLE_HEIGHT 24
+int consoleWidth = 80;  // Domyślna szerokość
+int consoleHeight = 24; // Domyślna wysokość
 
 char **board;
 char **display;
@@ -81,6 +83,17 @@ void placeMines()
     }
 }
 
+void getConsoleSize()
+{
+    struct winsize w;
+    // pokazuje error ale działa
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0)
+    {
+        consoleWidth = w.ws_col;
+        consoleHeight = w.ws_row;
+    }
+}
+
 void clearConsole()
 {
     printf("\033[H\033[J"); // ANSI: \033[H - kursor do góry, \033[J - czyści ekran
@@ -88,9 +101,11 @@ void clearConsole()
 
 void printBoard(char **b)
 {
+    getConsoleSize(); // Pobranie rozmiaru konsoli
+
     // Obliczanie odstępów dla centrowania
-    int paddingTop = (CONSOLE_HEIGHT - ROWS) / 2;
-    int paddingLeft = (CONSOLE_WIDTH - (COLS * 3)) / 2;
+    int paddingTop = (consoleHeight - ROWS - 3) / 2; // -3 na nagłówki
+    int paddingLeft = (consoleWidth - (COLS * 3)) / 2;
 
     clearConsole();
 
@@ -156,9 +171,6 @@ void printBoard(char **b)
         }
         printf("\n");
     }
-
-    // Opcjonalne opóźnienie (dla efektu wizualnego, np. przy szybkim odświeżaniu)
-    // sleep(1);
 }
 
 int reveal(int row, int col)
