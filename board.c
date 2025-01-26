@@ -3,6 +3,17 @@
 #include <time.h>
 #include "board.h"
 
+// Kolory ANSI
+#define RESET "\033[0m"
+#define DARK_GRAY "\033[1;30m"
+#define BLUE "\033[1;34m"
+#define GREEN "\033[1;32m"
+#define RED "\033[1;31m"
+#define MAGENTA "\033[1;35m"
+#define CYAN "\033[1;36m"
+#define YELLOW "\033[1;33m"
+#define WHITE "\033[1;37m"
+
 char **board;
 char **display;
 int ROWS, COLS, MINES;
@@ -81,7 +92,47 @@ void printBoard(char **b)
         printf("%2d |", i); // Wyrównanie numerów wierszy do dwóch cyfr
         for (int j = 0; j < COLS; j++)
         {
-            printf(" %c ", b[i][j]);
+            char cell = b[i][j];
+            switch (cell)
+            {
+            case '0':
+                printf(DARK_GRAY " %c " RESET, cell);
+                break;
+            case '1':
+                printf(BLUE " %c " RESET, cell);
+                break;
+            case '2':
+                printf(GREEN " %c " RESET, cell);
+                break;
+            case '3':
+                printf(YELLOW " %c " RESET, cell);
+                break;
+            case '4':
+                printf(MAGENTA " %c " RESET, cell);
+                break;
+            case '5':
+                printf(CYAN " %c " RESET, cell);
+                break;
+            case '6':
+                printf(RED " %c " RESET, cell);
+                break;
+            case '7':
+                printf(WHITE " %c " RESET, cell);
+                break;
+            case '8':
+                printf(WHITE " %c " RESET, cell);
+                break;
+            case '*': // Niewidoczne pole
+            case 'F': // Flaga
+                printf(WHITE " %c " RESET, cell);
+                break;
+            case 'M': // Mina, może być wyświetlana w grze przegranej
+                printf(RED " %c " RESET, cell);
+                break;
+            default:
+                printf(" %c ", cell);
+                break;
+            }
         }
         printf("\n");
     }
