@@ -10,6 +10,7 @@ extern int revealedFields;
 void initializeBoard();
 void freeBoard();
 void placeMines();
+void clearConsole();
 void printBoard(char **b);
 int reveal(int row, int col);
 void placeFlag(int row, int col);

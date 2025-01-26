@@ -14,6 +14,9 @@
 #define YELLOW "\033[1;33m"
 #define WHITE "\033[1;37m"
 
+#define CONSOLE_WIDTH 80
+#define CONSOLE_HEIGHT 24
+
 char **board;
 char **display;
 int ROWS, COLS, MINES;
@@ -78,18 +81,37 @@ void placeMines()
     }
 }
 
+void clearConsole()
+{
+    printf("\033[H\033[J"); // ANSI: \033[H - kursor do góry, \033[J - czyści ekran
+}
+
 void printBoard(char **b)
 {
-    printf("    "); // Dodatkowe odstępy dla numerów kolumn
+    // Obliczanie odstępów dla centrowania
+    int paddingTop = (CONSOLE_HEIGHT - ROWS) / 2;
+    int paddingLeft = (CONSOLE_WIDTH - (COLS * 3)) / 2;
+
+    clearConsole();
+
+    // Wyświetlanie pustych wierszy na górze (centrowanie w pionie)
+    for (int i = 0; i < paddingTop; i++)
+    {
+        printf("\n");
+    }
+
+    printf("%*s", paddingLeft, ""); // Centrowanie numerów kolumn
+    printf("    ");                 // Odstęp na numery wierszy
     for (int j = 0; j < COLS; j++)
     {
-        printf("%2d ", j); // Wyrównanie numerów kolumn do dwóch cyfr
+        printf("%2d ", j);
     }
     printf("\n");
 
     for (int i = 0; i < ROWS; i++)
     {
-        printf("%2d |", i); // Wyrównanie numerów wierszy do dwóch cyfr
+        printf("%*s", paddingLeft, ""); // Odstęp dla centrowania planszy
+        printf("%2d |", i);             // Numer wiersza
         for (int j = 0; j < COLS; j++)
         {
             char cell = b[i][j];
@@ -117,8 +139,6 @@ void printBoard(char **b)
                 printf(RED " %c " RESET, cell);
                 break;
             case '7':
-                printf(WHITE " %c " RESET, cell);
-                break;
             case '8':
                 printf(WHITE " %c " RESET, cell);
                 break;
@@ -126,7 +146,7 @@ void printBoard(char **b)
             case 'F': // Flaga
                 printf(WHITE " %c " RESET, cell);
                 break;
-            case 'M': // Mina, może być wyświetlana w grze przegranej
+            case 'M': // Mina
                 printf(RED " %c " RESET, cell);
                 break;
             default:
@@ -136,6 +156,9 @@ void printBoard(char **b)
         }
         printf("\n");
     }
+
+    // Opcjonalne opóźnienie (dla efektu wizualnego, np. przy szybkim odświeżaniu)
+    // sleep(1);
 }
 
 int reveal(int row, int col)
