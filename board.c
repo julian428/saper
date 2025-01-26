@@ -69,19 +69,19 @@ void placeMines()
 
 void printBoard(char **b)
 {
-    printf("  ");
+    printf("    "); // Dodatkowe odstępy dla numerów kolumn
     for (int j = 0; j < COLS; j++)
     {
-        printf(" %d", j);
+        printf("%2d ", j); // Wyrównanie numerów kolumn do dwóch cyfr
     }
     printf("\n");
 
     for (int i = 0; i < ROWS; i++)
     {
-        printf("%d ", i);
+        printf("%2d |", i); // Wyrównanie numerów wierszy do dwóch cyfr
         for (int j = 0; j < COLS; j++)
         {
-            printf(" %c", b[i][j]);
+            printf(" %c ", b[i][j]);
         }
         printf("\n");
     }
